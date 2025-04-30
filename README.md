@@ -1,5 +1,9 @@
 # 👤 LiteSocialProfile
 
+dependencies{
+implementation("androidx.core:core-splashscreen:1.0.1")
+}
+
 LiteSocialProfile is a sleek and lightweight Android social profile app built using Kotlin and XML. It allows users to view and edit their profile information with smooth UI, dark/light theme toggle, and persistent data storage using SharedPreferences.
 
 ---
