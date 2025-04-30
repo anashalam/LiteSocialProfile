@@ -1,0 +1,58 @@
+package com.example.litesocial
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class EditProfileActivity : AppCompatActivity() {
+    private lateinit var nameInput: EditText
+    private lateinit var bioInput: EditText
+    private lateinit var saveBtn: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profile)
+
+        nameInput = findViewById(R.id.nameEditText)
+        bioInput = findViewById(R.id.bioEditText)
+        saveBtn = findViewById(R.id.saveBtn)
+        val cancle = findViewById<Button>(R.id.cencleBtn)
+
+        // Set current values
+        val prefs = getSharedPreferences("profile", MODE_PRIVATE)
+        nameInput.setText(prefs.getString("name", ""))
+        bioInput.setText(prefs.getString("bio", ""))
+
+        saveBtn.setOnClickListener {
+            val name = nameInput.text.toString().trim()
+            val bio = bioInput.text.toString().trim()
+
+            if (name.isEmpty()) {
+                nameInput.error = "Name cannot be empty"
+                return@setOnClickListener
+            }
+
+            prefs.edit().apply {
+                putString("name", name)
+                putString("bio", bio)
+                apply()
+            }
+
+            finish()
+        }
+
+
+
+        cancle.setOnClickListener {
+            val intent= Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+}
+
+
